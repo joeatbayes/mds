@@ -3,7 +3,25 @@ High performance KV Metadaa store ideal for Web Scale data needed to fully hydra
 
 MDS is what I call a forward propagated data cache.   A common use it extract data as it changes in SQL or NOSQL master databases and push it through a Queue system to one or more MDS servers as JSON or XML snippets.   When this detail data is needed it can be retrieved fast with high availability while keeping the runtime load off more expensive master servers. 
 
-MDS was originally designed to provide high speed data once you know what the keys are.  A common use case is to retrieve object ID from the search engine or database then retrieve the JSON snippets needed for those documents from MDS.   MSD scales far better than databases and is far less expensive than database engines.    It has also been used to retrieve detailed stock fundamental data and even for client side applications where it reduced the load on master RDBS enough to extend their lifes by years.     
+MDS was originally designed to provide high speed data once you know what the keys are.  A common use case is to retrieve object ID from the search engine or database then retrieve the JSON snippets needed for those documents from MDS.   MSD scales better than databases and it is less expensive to add more nodes so it becomes relatively easy to meet very large scale demands.   MDS has also been used to retrieve detailed stock fundamental data and even for client side applications where it reduced the load on master RDBS enough to extend the server life by years.     
+
+> #### Why not a traditional cache strategy:
+
+> > The main reason is that cache with return to origin on miss in a SOA architecture suffers from accumulated latency and services still have to be scaled to meet read storms which is expensive.
+> >
+> > At one of the larger companies I worked at had a web page that ended up making over 300 SOA calls to services.  These services made their own SOA calls so the calling chain ended up 5 to 7 layers deep.   
+> >
+> > In a big company each SOA service has to live within a budget so they end up using  a local cache to reduce load on their database master servers.     The Web pages calls service-A which caches for 4 minutes.  Service-A calls service-B which caches for 8 minutes.   Service-B  calls service-C  which caches for 6 minutes. 
+> >
+> > Each of these data freshness commitments were well thought and scrupously negotiated with the service consumers but they still added up to 4 + 8 + 6 = 18 minutes of data staleness.  It also entails significant redundant costs since each of these services has to be scaled to meet load from miss storms.   
+> >
+> > Many pieces of data something in changing in service-C can be packaged as a JSON, XML or txt object.   The trigger can be a database trigger or more often by the service writing into the database.  The packaged data snippets are pushed into a Queue and can be delivered to the entire fleet of MDS servers in under 200ms using Kafka or typically under 10ms when using our [FastQueueFS](https://github.com/joeatbayes/fastQueueFS).
+> >
+> > We are looking at forward propagation data staleness of 18 minutes versus sub 200ms.  The 200ms version makes it easier to meet business demands that require fresh data.    
+> >
+> > There are a few cases such as Availability to Ship that absolutely must be checked against the master database but with web commerce you could have multiple people looking at the same items ready to purchase.  It isn't until they press the order button that it becomes critical and must be reserved in the master.    If you don't have that item available to sell you probably don't want to show it as available on prior screens.   Having a version of  availability to ship that is gauranteed to be no more than 200ms old is much better than a 18 minute old version because it allows on the services other than the actual order placement to access the cached data without any load on the availability to ship service.   Without the forward propagated cache, every time the items is displayed in a search or web page it may produce multiple hits against a mission critical service.    Scaling transitionally safe databases that are typically used for mission critical services to meet high read loads when what you really need it to meet is the worst case order submission rate is wasteful.  
+> >
+> > When service consumers know a given piece of data might be 18 minutes they object and start demanding the availability to ship service to be massively and expensively over scaled.  This kind of over scaling when replicated across many services is tremendously expensive so even leading ecommerce companies result to caching.  If they make the easy but wrong choice and put a cache behind there service it makes the data freshness problem worse and total cost per page worse.
 
 MDS has been SOA latency optimized.  This essentially means that each HTTP request allows the client to retrieve upto 500 items by key at a time or to update as many as will fit in the max acceptable post size.  This prevents the downstream client from making many repeated calls which accumulates latency.  It also minimizes the temptation to make many requests in parralell which wastes machine resources on both machines and in the network. 
 
@@ -13,9 +31,11 @@ MDS Leverages Linux file cache to deliver near RAM performance for many Terrabyt
 
 > During 2015 I tested this system utilizing all the available cores on a R8 virtual machine using the default local disk configuration and it stabilized at 45K requests per second with a 3K average body size body.  This worked because the requests were bypassing the network inside the same box.  The CPU Utilization never peaked above 80% even when running the clients locally.  
 >
-> We could only reach 22K per second when the test clients were ran on a external box because we saturated the network adapter.        Preliminary tests indicated that we could hit sustain over 60K requests per second on a physcial server with a 1 Gig network connection.
+> We could only reach 22K per second when the test clients ran on a external box because we saturated the network adapter.        Preliminary tests indicated that we could hit sustain over 60K requests per second on a physcial server with a 10 Gig network connection.
 >
 > At that time the client I using the MDS system was one of the largest consumer referral services in the USA.  A single MDS server running on a R8 virt could meet their entire load with 50% capacity to spare.  As a distributed architect I do not like single points of failure so I had them deploy 3 smaller virts so we could take one down for service and still be two failures away from an outage. 
+>
+> One of the difficult aspect of scaling a MDS fleet is that we rapidly exceed the data capacity of even the most powerful load balancers.  This is one reason I tend to prefer building client side dispatch into the services calling MDS so the traffic can bypass the load balancer bottleneck.   Modern network routers and switches have more options to manage traffic at data volume at this scale but in very large data environments we may still have to partition the MDS servers into different network segments to avoid overwhelming the macro network. Luckily this is relatively easy with the queue feed system. 
 
 Copyright (c) 2014 [Joseph Ellsworth, Bayes Analytic](http://BayesAnalytic.com/contact) - See use terms in License.txt
 
