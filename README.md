@@ -5,6 +5,8 @@ MDS is what I call a forward propagated data cache.   A common use is to extract
 
 MDS was originally designed to provide high speed data once you know what the keys are.  A common use case is to retrieve object ID from the search engine or database then retrieve the JSON snippets needed for those documents from MDS.   MSD scales better than databases and it is less expensive to add more nodes.   With horizontal scalability it becomes relatively easy to meet very large scale demands.   MDS has also been used to retrieve detailed stock fundamental data and even for client side applications where it reduced the load on master RDBS enough to extend the server life by years.     
 
+##### We sell consulting services [contact](http://BayesAnalytic.com/contact)
+
 > #### Why not a traditional cache strategy:
 
 > > The main reason is that cache with return to origin on miss in a SOA architecture suffers from accumulated latency and services still have to be scaled to meet read storms demands which is expensive.
@@ -74,13 +76,13 @@ Copyright (c) 2014 [Joseph Ellsworth, Bayes Analytic](http://BayesAnalytic.com/c
 > > node MDSServer.js 9842 ./config ./data  > log/mdsserver9842.log.txt    
 > > ```
 >
-> It is considered best practice to publish a single URI such as http://CatalogCache.compname.org  and use haproxy to load balance requests between the node instances.   It is also possible ot use a similar configuration with many load balancers.  
+> It is considered best practice to publish a single URI such as http://CatalogCache.compname.org  and use haproxy or nginx to balance requests between the node instances.   It is also possible to accomplish the same  many load balancers.  
 >
 > > > > My personal preference is to skip the extra server node add a small client library that routes requests between servers giving preference to the instances responding fastest.   
 > > > >
 > > > > This  routing technique is needed anyway because any single server will eventually be too small to serve very large web sites so you will need the ability to route requests between a fleet of servers anyway.   
 >
-> You actually need at least two physical or two isolated virtual servers each running MDS to allow a single server to be brought down for service without causing a site outage.  My preference as a distributed architect is a minimum fleet size of 3 so I am always 2 servers away from failure. 
+> You need at least two physical or two isolated virtual servers each running MDS to allow a single server to be brought down for service without causing a site outage.  My preference as a distributed architect is a minimum fleet size of 3 so I am always 2 servers away from failure. 
 >
 > One last thing never expose these servers directly to the public internet.  They have been very stable and ran for months under high loads but the HTTP listener library has not been hardened for direct access from web clients.  If you need to expose the web traffic do it though two HAProxy nodes or something similar in your router. 
 >
@@ -108,14 +110,6 @@ Copyright (c) 2014 [Joseph Ellsworth, Bayes Analytic](http://BayesAnalytic.com/c
 >
 > Under linux this is  normally set in the .bashrc
 
-**Add  .;./lib;../lib to PATH**  
-
-> > This is needed because some of our libraries are in the .lib directory and node needs to know where to look for them. 
-> >
-> > On Windows this can be done with the command: 
-> >
-> > ​     set PATH=.;./lib;%PATH%
-
 **Change Linux File Limits:**
    The design of the Node.js system uses async IO which may open hundreds
    of files waiting for callback. We need to have the user running MDS
@@ -123,30 +117,20 @@ Copyright (c) 2014 [Joseph Ellsworth, Bayes Analytic](http://BayesAnalytic.com/c
    with a system wide max limit of 400,000 files. 
    http://www.cyberciti.biz/faq/linux-increase-the-maximum-number-of-open-files/
 
-   vi /etc/sysctl.conf
+> > > > ```
+> > > >   vi /etc/sysctl.conf
+> > > >
+> > > >       fs.file-max = 100000
+> > > >
+> > > >    vi /etc/security/limits.conf
+> > > >
+> > > >      httpd soft nofile 4096
+> > > >
+> > > >      httpd hard nofile 10240
+> > > >
+> > > > ```
 
-​      fs.file-max = 100000
-
-   vi /etc/security/limits.conf
-
-​     httpd soft nofile 4096
-​     httpd hard nofile 10240
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
 
 # Resources that may be Helpful
 
@@ -176,5 +160,27 @@ Copyright (c) 2014 [Joseph Ellsworth, Bayes Analytic](http://BayesAnalytic.com/c
      Official Docker Node.js - https://docs.docker.com/examples/nodejs_web_app/
        https://github.com/gasi/docker-node-hello
 
-
 ​     
+
+## Some of my Other Projects
+
+
+
+> - **[Quantized Classifier](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition)** A Machine Learning classifier using novel techniques that delivers precision at 100% recall comparable to with Deep Learning CNN for many classification tasks while running many times faster.  If is written in GO  and available on a MIT license. 
+> - [**Solve Water Scarcity Using DEM**](http://AirSolarWater.com/dem)  A Novel way of using micro reservoirs to reduce the impact of water scarcity. Ideal for adoption on poor countries especially in the very poor rural agricultural regions.   It is based on the premis of building very small micro capture dams using stones and dam.   The DEM (Digital Elevation Model) work models water flow so we can show people where to build these small reservoirs so each reservoir will refill with 1,000's of gallons of water everytime there is more than 0.3 inches of runoff.  Water soaks in to nurture food producing trees while also refilling local aquifer.
+> - **[Bayesanlytic.com Articles About Machine Learning](http://bayesanalytic.com/main/technical-engineering/machine-learning/)**  - Many articles including conceptual approach to building KNN engines.     A description of our  predictive Analytic engine using AI techniques with high volume, high speed and big data capability.  Designed to predict stock price moves using technical data.  
+>
+>
+> - [The **Air Solar Water product line A2WH**](http://airsolarwater.com/)  is a fully renewable extraction of water from air.  Provides systems which extract liquid potable water from air using solar energy.   This technology  can deliver water cost effectively in the most hostile locations and can scale from 1 gallon per day up through millions of gallons per day. A2WH patented technology provides world leading ability to extract water from air using only renewable energy. 
+> - [**FastQueueFS**](https://github.com/joeatbayes/fastQueueFS) Fast Queue with many reader capacity using HTTP Protocol and REST API. Similar to Kafka but faster and with more flexible topics and queue configuration. Written in FSharp automatically handles multiple topics. Very high performance, Low Latency with N-Tier data propagation
+> - [**CNCUtil**](https://bitbucket.org/joexdobs/cncutil)  Ruby Code to Generate optimized GCODE using high level scripting commands.
+>
+>
+> - [**Correct Energy Solutions**](http://correctenergysolutions.com/) -  provides  unique energy solutions designed solve real world energy and conservation problems.  This includes [micro-wind turbines](http://correctenergysolutions.com/wind) suitable for near ground installation,  renewable cooling and air to water technologies.  
+> - [**CSVTablesInBrowser**](https://github.com/joeatbayes/CSVTablesInBrowser)  Render CSV files on the server in nice tables fetched using AJAX. Very easy to use with repeated headers, value override via callbacks.
+>
+>
+> -  My personal site [**JoeEllsworth.com**](http://joeellsworth.com/) which contains my [resume](http://joeellsworth.com/resume/2013-v04-joe-bio-dir-cto-architect.pdf)
+
+
+
