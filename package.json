@@ -1,0 +1,29 @@
+{
+  "name": "MDS-Metadata-Server",
+  "version": "0.1.0",
+  "private": true,
+  "description": "High Peroormance KV Store that delivers good performance when data size dramatically exceeds RAM capacity. ",
+  "main": "MDSServer.js",
+  "scripts": {
+    "test": "echo PLEASE ADD SOME TESTS",
+    "start": "cd client; top -b -n 1 > machine_config_top.txt;  df -h > machine_config_disk_free.txt; node MDSServer.js 9701 config data"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/angieslist/rewards-search-service.git"
+  },
+  "author": "Joseph Ellsworth",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/angieslist/rewards-search-service/issues"
+  },
+  "homepage": "https://github.com/angieslist/rewards-search-service",
+  "engines": {
+    "node": "0.12.x"
+  },
+  "devDependencies": {
+    "chai": "^3.3.0",
+    "mocha": "^2.3.3",
+    "request": "^2.63.0"
+  }
+}

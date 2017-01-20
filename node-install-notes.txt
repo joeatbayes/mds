@@ -1,0 +1,33 @@
+Options:
+  -v, --version        print node's version
+  -e, --eval script    evaluate script
+  -p, --print          evaluate script and print result
+  -i, --interactive    always enter the REPL even if stdin
+                       does not appear to be a terminal
+  --no-deprecation     silence deprecation warnings
+  --trace-deprecation  show stack traces on deprecations
+  --v8-options         print v8 command line options
+  --max-stack-size=val set max v8 stack size (bytes)
+
+Environment variables:
+NODE_PATH              ':'-separated list of directories
+                       prefixed to the module search path.
+NODE_MODULE_CONTEXTS   Set to 1 to load modules in their own
+                       global contexts.
+NODE_DISABLE_COLORS    Set to 1 to disable colors in the REPL
+
+Documentation can be found at http://nodejs.org/
+consult@solr303:/dev/jm/mds/lib$ NODE_MODULE_CONTEXTS=1;export NODE_MODULE_CONTE
+XTS
+consult@solr303:/dev/jm/mds/lib$ ls
+BasicHTTPServer.js       HandlerProxy.js            INIFile_test.js
+BasicHTTPServer_test.js  HTTPGet.js                 MDSUtil.js
+Cache.js                 HTTPGet_test.js            StrBuf.js
+ElapsedTimer.js          INIfile.js                 StrUtil.js
+FileUtil.js              INIfile_test.data.out.txt  t.t
+GenericHTTPHandler.js    INIFile_test.data.txt      UpdateQueue.js
+consult@solr303:/dev/jm/mds/lib$ node
+
+export NODE_PATH=.:./lib:..:../lib:/usr/local/lib/node_modules:~/.npm
+export NODE_PATH
+
