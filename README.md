@@ -1,35 +1,45 @@
 # mds  (Metadata Store)
-High performance KV Metadaa store ideal for Web Scale data needed to fully hydrate search results.   
+High performance KV Metadaa store ideal for Web Scale data needed to fully hydrate search results.    [API DOC](doc/api-doc.md)
 
-Leverages Linux file cache to deliver near RAM performance for many Terrabyte data sets.
+MDS is what I call a forward propagated data cache.   A common use it extract data as it changes in SQL or NOSQL master databases and push it through a Queue system to one or more MDS servers as JSON or XML snippets.   When this detail data is needed it can be retrieved fast with high availability while keeping the runtime load off more expensive master servers. 
 
-Horizontally scalable in a toaster style architecture to provide nearly unlimited read rates. 
+MDS was originally designed to provide high speed data once you know what the keys are.  A common use case is to retrieve object ID from the search engine or database then retrieve the JSON snippets needed for those documents from MDS.   MSD scales far better than databases and is far less expensive than database engines.    It has also been used to retrieve detailed stock fundamental data and even for client side applications where it reduced the load on master RDBS enough to extend their lifes by years.     
 
-Copyright (c) 2014 <Joseph Ellsworth, Bayes Analytic> - See use terms in License.txt
+MDS has been SOA latency optimized.  This essentially means that each HTTP request allows the client to retrieve upto 500 items by key at a time or to update as many as will fit in the max acceptable post size.  This prevents the downstream client from making many repeated calls which accumulates latency.  It also minimizes the temptation to make many requests in parralell which wastes machine resources on both machines and in the network. 
+
+MDS Leverages Linux file cache to deliver near RAM performance for many Terrabyte data sets.  MDS is Horizontally scalable in a toaster style architecture to provide nearly unlimited read rates. 
+
+### Performance Tests 
+
+> During 2015 I tested this system utilizing all the available cores on a R8 virtual machine using the default local disk configuration and it stabilized at 45K requests per second with a 3K average body size body.  This worked because the requests were bypassing the network inside the same box.  The CPU Utilization never peaked above 80% even when running the clients locally.  
+>
+> We could only reach 22K per second when the test clients were ran on a external box because we saturated the network adapter.        Preliminary tests indicated that we could hit sustain over 60K requests per second on a physcial server with a 1 Gig network connection.
+>
+> At that time the client I using the MDS system was one of the largest consumer referral services in the USA.  A single MDS server running on a R8 virt could meet their entire load with 50% capacity to spare.  As a distributed architect I do not like single points of failure so I had them deploy 3 smaller virts so we could take one down for service and still be two failures away from an outage. 
+
+Copyright (c) 2014 [Joseph Ellsworth, Bayes Analytic](http://BayesAnalytic.com/contact) - See use terms in License.txt
 
 # Getting Started
 
 ## Starting the server ##
 
-> Read the section on install and configuration below.  
+> **Read the section on install and configuration below**.  
 >
 > Change to the directory where you have placed the MDS source code.
 >
 > Run:
 >
->   node 
->
 > ```shell
-> MDSServer.js 9839 ./config ./data  > log/mdsserver9839.log.txt
+> node MDSServer.js 9839 ./config ./data  > log/mdsserver9839.log.txt
 > ```
 >
-> 
+> The  bat files start_mds_server_9839.bat through _9848 are convienience utility to start many MDS servers.  This is enough listeners to fully occupy a 8 core box until the network is saturated. 
 
 > #### Running Multiple Listeners####
 >
-> Node.js has one critical weakness in that a problem can easily crash the server.   The other main challenge is that you can not utilize all CPU cores available in a modern system using single network listener.    
+> Node.js has a critical weakness in that a problem can easily crash the server.   The other main challenge is that you can not utilize all CPU cores available in a modern system using single network listener.    
 >
-> There are many ways to work around this and some libraries than claim to run multi-process but the most fool proof way I have found it to run # of cores -1 listeners.     
+> There are many ways to work around this and some libraries than claim to run multi-process but the most fool proof way I have found it to run # of cores -1 listeners as separate processes.  This maximizes isolation and risk between processes which is always desirable in high availability systems.   
 >
 > The MDS server is designed to allow many readers to run many listeners on the same data directory.    By running many readers we eliminate the risk of a problem in one crashing the others while we can easily tune the number of listeners to maximize request capacity for the available hardware.
 >
@@ -42,7 +52,7 @@ Copyright (c) 2014 <Joseph Ellsworth, Bayes Analytic> - See use terms in License
 > > node MDSServer.js 9842 ./config ./data  > log/mdsserver9842.log.txt    
 > > ```
 >
-> It is considered best practice to publish a single URI such as http://CatalogCache  and use haproxy to load balance requests between the node instances.   It is also possible ot use a similar configuration with many load balancers.  
+> It is considered best practice to publish a single URI such as http://CatalogCache.compname.org  and use haproxy to load balance requests between the node instances.   It is also possible ot use a similar configuration with many load balancers.  
 >
 > > > > My personal preference is to skip the extra server node add a small client library that routes requests between servers giving preference to the instances responding fastest.   
 > > > >
@@ -62,7 +72,7 @@ Copyright (c) 2014 <Joseph Ellsworth, Bayes Analytic> - See use terms in License
 
 ## Sample HTTP Rest commands ##
 
-
+> >  See  (doc/api-doc.md)[doc/api-doc.md]  It will be easiest to read this from the Github web browser which renders formatted .md files. 
 
 ## Install & Configuration##
 

@@ -82,6 +82,6 @@ class MDSIDHarvest:
      elapRun("produceKeySet", self.begRun)
 
 tObj = MDSIDHarvest()
-#tObj.produceKeySet("/ag/tmp/report")
-tObj.produceKeySet("/cores/consult/el-bulk")
+#tObj.produceKeySet("/...../tmp/report")
+tObj.produceKeySet("/....../el-bulk")
 
