@@ -1,6 +1,24 @@
-## HTTP REST API
+#HTTP REST API
 
- TODO:  FIND WHERE I PUT THE documentation I wrote for this 
+> ## Add data to MDS with HTTP Post
+>> See [sample-post-update.py](sample-post-update.py) and [sample-post-update.bat](sample-post-update.bat) which uses curl.
+> > ```
+> > curl -X POST http://127.0.0.1:9839/add --data-binary @sample-post-update.txt
+> >
+> > Where Content of the POST STRING IS:
+> > 12737/001/xjoe=I am a random test body for 12737/xjoe
+> > 12738/001/xjoe=I am a random test body for 12738/xjoe
+> > 12739/001/xjoe=I am a random test body for 12739/xjoe
+> > 12740/001/xjoe=I am a random test body for 12740/xjoe
+> > 12741/001/xjoe=I am a random test body for 12741/xjoe
+> > 12742/001/xjoe=I am a random test body for 12742/xjoe
+> > 12743/001/xjoe=I am a random test body for 12743/xjoe
+> > 12744/001/xjoe=I am a random test body for 12744/xjoe
+> >
+> > The Key is everything up to the first '='' while the body is everything after that upto the first \n for the body.   Many objects can be updated in a single post.   Recomendation is to base64 encode body strings but any encoding the escapes \n will work.
+> > ```
+
+> TODO:  FIND WHERE I PUT THE documentation I wrote for this 
 
 
 
