@@ -59,7 +59,7 @@ listener.LINI = LINI;
 // register dynamic handlers
 listener.add_handler("joe",     GenericHTTPHandler.GenericHTTPHandler);
 listener.add_handler("status",  HandlerStatus.Status);
-listener.add_handler("mds",       HandlerQ.Q);
+listener.add_handler("mds",     HandlerQ.Q);
 listener.add_handler("add",     HandlerBulkAdd.BulkAdd);
 listener.add_handler("config",  GenericHTTPHandler.GenericHTTPHandler, configDir);
 
