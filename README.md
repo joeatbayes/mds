@@ -7,6 +7,9 @@ High performance KV Metadaa store ideal for Web Scale systems that are strugglin
 of laptops.  Well live and learn.  If somebody wants to try this version then please let me know and I will make it a priority to either fix this version or locate the good version. **
 
 
+Since I wrote this version a few things have changed.  Riak has emerged as a more sophisticated approach although I think it may be overkill for forward caching.  I am not sur eit is worth fixing this code when Riak.  I have also found that during the period from 2015 through 2016 Elastic search has gotten so fast at returning detailed body data along with search results that in many instances using a separate metadata cache is no longer necessary.  There are exceptions which is where MDS may will continue to fill a valuable architectural niche especially when you need to support nearly infinite parralell read capacity only limited by network bandwidth. 
+
+
 ---------------
 
 MDS is what I call a forward propagated data cache.   A common use is to extract data as it changes in SQL or NOSQL master databases and push it through a Queue system to one or more MDS servers as JSON, XML or TXT snippets.   When this detail data is needed it can be retrieved fast with high availability while keeping the runtime load off more expensive master servers. 
