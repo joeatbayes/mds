@@ -1,8 +1,8 @@
-12737/001/xjoe=I am a random test body for 12737/xjoe
-12738/001/xjoe=I am a random test body for 12738/xjoe
-12739/001/xjoe=I am a random test body for 12739/xjoe
-12740/001/xjoe=I am a random test body for 12740/xjoe
-12741/001/xjoe=I am a random test body for 12741/xjoe
-12742/001/xjoe=I am a random test body for 12742/xjoe
-12743/001/xjoe=I am a random test body for 12743/xjoe
-12744/001/xjoe=I am a random test body for 12744/xjoe
+12737/8.2/comp=I am a random test body for 12737/xjoe  
+12738/8.2/comp=I am a random test body for 12738/xjoe
+12739/8.2/comp=I am a random test body for 12739/xjoe
+12740/8.2/comp=I am a random test body for 12740/xjoe
+12741/8.2/comp=I am a random test body for 12741/xjoe
+12742/8.2/comp=I am a random test body for 12742/xjoe
+12743/8.2/comp=I am a random test body for 12743/xjoe
+12744/8.2/comp=I am a random test body for 12744/xjoe

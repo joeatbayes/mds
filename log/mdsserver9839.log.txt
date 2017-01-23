@@ -1,4 +1,4 @@
-2017-01-20T05:55:06.525Z  -	 WARN	8508	GBLSaveQueriesDir=undefined
+2017-01-23T04:58:59.597Z  -	 WARN	10668	GBLSaveQueriesDir=undefined
 parse inStr=#Copyright (c) 2014 <Joseph Ellsworth, Bayes Analytic> - See use terms in License.txt
 [main]
 queueserver = localhost:9873
@@ -16,13 +16,32 @@ elastsearch = localhost:9200
 saveindatadir = true
 
 listenPort=9839
-2017-01-20T05:55:06.541Z  -	 NORM	8508	BasicHTTPServer L360: /add_handler?handlers%5Bobject%20Object%5D&doc_root=./doc&parms= undefined
-2017-01-20T05:55:06.541Z  -	 NORM	8508	BasicHTTPServer L360: /add_handler?handlers%5Bobject%20Object%5D&doc_root=./doc&parms= undefined
-2017-01-20T05:55:06.541Z  -	 NORM	8508	BasicHTTPServer L360: /add_handler?handlers%5Bobject%20Object%5D&doc_root=./doc&parms= undefined
-2017-01-20T05:55:06.541Z  -	 NORM	8508	BasicHTTPServer L360: /add_handler?handlers%5Bobject%20Object%5D&doc_root=./doc&parms= undefined
-2017-01-20T05:55:06.541Z  -	 NORM	8508	BasicHTTPServer L360: /add_handler?handlers%5Bobject%20Object%5D&doc_root=./doc&parms= %22C:%5C%5Cjoe%5C%5Cgit%5C%5Cmds%5C%5Cconfig%22
-2017-01-20T05:55:06.541Z  -	 NORM	8508	BasicHTTPServer L366: /listen?listenPort=9839&docRoot=./doc
-2017-01-20T05:55:31.523Z  -	 NORM	8508	BasicHTTPSever L329: &url=/api-doc.html
-2017-01-20T05:55:31.528Z  -	 NORM	8508	[request:1484891731528]	[user:nouser]GenericHTTPHandler L80: uri=/api-doc.html&abs=./doc/api-doc.html
-2017-01-20T05:56:45.266Z  -	 NORM	8508	BasicHTTPSever L329: &url=/api-doc.html
-2017-01-20T05:56:45.267Z  -	 NORM	8508	[request:1484891805267]	[user:nouser]GenericHTTPHandler L80: uri=/api-doc.html&abs=./doc/api-doc.html
+2017-01-23T04:58:59.611Z  -	 NORM	10668	BasicHTTPServer L360: /add_handler?handlers%5Bobject%20Object%5D&doc_root=./doc&parms= undefined
+2017-01-23T04:58:59.612Z  -	 NORM	10668	BasicHTTPServer L360: /add_handler?handlers%5Bobject%20Object%5D&doc_root=./doc&parms= undefined
+2017-01-23T04:58:59.612Z  -	 NORM	10668	BasicHTTPServer L360: /add_handler?handlers%5Bobject%20Object%5D&doc_root=./doc&parms= undefined
+2017-01-23T04:58:59.612Z  -	 NORM	10668	BasicHTTPServer L360: /add_handler?handlers%5Bobject%20Object%5D&doc_root=./doc&parms= undefined
+2017-01-23T04:58:59.612Z  -	 NORM	10668	BasicHTTPServer L360: /add_handler?handlers%5Bobject%20Object%5D&doc_root=./doc&parms= %22C:%5C%5Cjoe%5C%5Cgit%5C%5Cmds%5C%5Cconfig%22
+2017-01-23T04:58:59.612Z  -	 NORM	10668	BasicHTTPServer L366: /listen?listenPort=9839&docRoot=./doc
+2017-01-23T04:59:04.720Z  -	 NORM	10668	BasicHTTPSever L329: &url=/add
+Driver() baseDir=C:\joe\git\mds\data
+2017-01-23T04:59:04.725Z  -	 INFO	10668	BasicHTTPServer L344: There was an error on this page.
+/add
+Error description: message is not defined
+
+ReferenceError: message is not definedReferenceError: message is not definedReferenceError: message is not defined
+    at new BulkAdd (C:\joe\git\mds\lib\HandlerBulkAdd.js:112:1)
+    at Server.BasicHTTPServer.self.handle (C:\joe\git\mds\lib\BasicHTTPServer.js:333:18)
+    at emitTwo (events.js:87:13)
+    at Server.emit (events.js:172:7)
+    at HTTPParser.parserOnIncoming [as onIncoming] (_http_server.js:528:12)
+    at HTTPParser.parserOnHeadersComplete (_http_common.js:103:23)Click OK to continue.
+
+
+2017-01-23T04:59:04.725Z  -	 NORM	10668	BasicHTTPServer L168: handle_as_error ?ERR=ERROR+in+Request&uri=/add&status=500&message=There%20was%20an%20error%20on%20this%20page.%0A/add%0AError%20description:%20message%20is%20not%20defined%0A%0AReferenceError:%20message%20is%20not%20definedReferenceError:%20message%20is%20not%20definedReferenceError:%20message%20is%20not%20defined%0A%20%20%20%20at%20new%20BulkAdd%20(C:%5Cjoe%5Cgit%5Cmds%5Clib%5CHandlerBulkAdd.js:112:1)%0A%20%20%20%20at%20Server.BasicHTTPServer.self.handle%20(C:%5Cjoe%5Cgit%5Cmds%5Clib%5CBasicHTTPServer.js:333:18)%0A%20%20%20%20at%20emitTwo%20(events.js:87:13)%0A%20%20%20%20at%20Server.emit%20(events.js:172:7)%0A%20%20%20%20at%20HTTPParser.parserOnIncoming%20%5Bas%20onIncoming%5D%20(_http_server.js:528:12)%0A%20%20%20%20at%20HTTPParser.parserOnHeadersComplete%20(_http_common.js:103:23)Click%20OK%20to%20continue.%0A%0A
+2017-01-23T04:59:57.765Z  -	 NORM	10668	BasicHTTPSever L329: &url=/status
+2017-01-23T04:59:57.905Z  -	 NORM	10668	BasicHTTPSever L329: &url=/status
+2017-01-23T05:07:11.364Z  -	 NORM	10668	BasicHTTPSever L329: &url=/mds/108286/8.2/metric%2520--data%2520%2522i%2520am%2520a%2520test%2520metric%2520body%2520108286%2522
+HandlerStatus extraPath=108286/8.2/metric%20--data%20%22i%20am%20a%20test%20metric%20body%20108286%22
+Driver() baseDir=C:\joe\git\mds\data
+extraPath =108286/8.2/metric%20--data%20%22i%20am%20a%20test%20metric%20body%20108286%22
+method =PUT
