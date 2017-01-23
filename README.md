@@ -2,15 +2,26 @@
 High performance KV Metadaa store ideal for Web Scale systems that are struggling to meet performance and data freshness demands at a reasonable cost.   [API DOC](doc/api-doc.md)
 
 # BROKEN PLEASE DO NOT ATTEMPT TO USE THIS YET.  
-## CONTACT ME IF YOU WANT TO TRY IT AND I WILL PUT PRIORITY ON LOCATING A CORRECT VERSION
-** When I was working on the API document I found that this vesion of the code is horribly broke.   I know I had a good version when working on it previously.   I should have added it to github then but wated a couple years and a couple 
-of laptops.  Well live and learn.  If somebody wants to try this version then please let me know and I will make it a priority to either fix this version or locate the good version. **
+### CONTACT ME IF YOU WANT TO TRY  MDS  AND I WILL MAKE IT A PRIORITY TO LOCATE A CORRECT VERSION
 
+When I was working on the API document I found that this version of the code is broke.   I had a perfectly working version when testing previously.   I should have added it to github then but I waited a couple years and a couple of laptops.  Well live and learn.  
 
-Since I wrote this version a few things have changed.  Riak has emerged as a more sophisticated approach although I think it may be overkill for forward caching.  I am not sur eit is worth fixing this code when Riak.  I have also found that during the period from 2015 through 2016 Elastic search has gotten so fast at returning detailed body data along with search results that in many instances using a separate metadata cache is no longer necessary.  There are exceptions which is where MDS may will continue to fill a valuable architectural niche especially when you need to support nearly infinite parralell read capacity only limited by network bandwidth. 
+If you want to try MDS then please let me know and I will make it a priority to either fix this version or locate the good version. 
 
+###Changing Market Conditions###
+Since I wrote this version a few things have changed.  Riak has emerged as a more sophisticated approach.  I think Riak may be overkill for forward propagated caching.  I have also found that during the period from 2015 through 2016 Elastic search has become so fast at returning detailed body data along with search results that in many instances using a separate metadata cache is no longer necessary.  There are exceptions which is where MDS may will continue to fill a valuable architectural niche especially when you need to support nearly infinite parallel read capacity limited only by network bandwidth. 
+
+###Isolated toasters is still the safest way to scale ###
+I am still a firm believer in a forward propagated cache as one of the best way to scale web scale systems.    I also still believe that complete isolation of the read nodes except for that Queue that delivers them data is the best way to deliver very high availability with maximum fault tolerance.     One problem I have with the marketing FUD for both elastic and Riak is that they claim manage federating many nodes into a single large federated search database which seems like an ideal approach but when something goes wrong it takes the entire enterprise cluster down all at once in ways that can take days to diagnose an fix.   
+
+The MDS toaster architecture is far less complex and in many ways far less sophisticated since it depends on a queue to deliver the data.  One it can virtually guarantee is that two physically separated nodes of MDS will not fail at the same time due to a bug that ripples through a cluster.  
+
+We have seen major companies experience mutli-day outages when their Elastic search cluster failed because they didn't build this level of isolation built into their architecture.  Even when using the very best federated database to allow large read volumes and transparent data sharding you still must run at least two completely isolated sets of these servers or it is nearly guaranteed that it will eventually cause a complete outage that is difficult and time consuming to fix. 
+
+One thing I still struggle with is that the federated search FUD is still better than reality.    If you take two elastic search nodes run them completely isolated and measure the maximum query capacity of the two servers the TPS and degradation under load is still substantially better than if you create them as a elastic search cluster. When using 3 nodes when completely isolated we found a 3X performance capacity.  When used as a federated cluster the same hardware only delivered about 1.5X and there was a higher probability that something silly like a broken version upgrade on one node crashing the entire cluster.    Isolated toasters require a little more effort to plan deployment since you need a queue mechanism to deliver the data but it still delivers the greatest performance per $ of server cost and the highest degree of resistance to complete site outage.
 
 ---------------
+===============
 
 MDS is what I call a forward propagated data cache.   A common use is to extract data as it changes in SQL or NOSQL master databases and push it through a Queue system to one or more MDS servers as JSON, XML or TXT snippets.   When this detail data is needed it can be retrieved fast with high availability while keeping the runtime load off more expensive master servers. 
 
