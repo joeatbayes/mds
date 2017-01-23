@@ -1,6 +1,14 @@
 # mds  (Metadata Store)
 High performance KV Metadaa store ideal for Web Scale systems that are struggling to meet performance and data freshness demands at a reasonable cost.   [API DOC](doc/api-doc.md)
 
+# BROKEN PLEASE DO NOT ATTEMPT TO USE THIS YET.  
+## CONTACT ME IF YOU WANT TO TRY IT AND I WILL PUT PRIORITY ON LOCATING A CORRECT VERSION
+** When I was working on the API document I found that this vesion of the code is horribly broke.   I know I had a good version when working on it previously.   I should have added it to github then but wated a couple years and a couple 
+of laptops.  Well live and learn.  If somebody wants to try this version then please let me know and I will make it a priority to either fix this version or locate the good version. **
+
+
+---------------
+
 MDS is what I call a forward propagated data cache.   A common use is to extract data as it changes in SQL or NOSQL master databases and push it through a Queue system to one or more MDS servers as JSON, XML or TXT snippets.   When this detail data is needed it can be retrieved fast with high availability while keeping the runtime load off more expensive master servers. 
 
 MDS was originally designed to provide high speed data once you know what the keys are.  A common use case is to retrieve object ID from the search engine or database then retrieve the JSON snippets needed for those documents from MDS.   MSD scales better than databases and it is less expensive to add more nodes.   With horizontal scalability it becomes relatively easy to meet very large scale demands.   MDS has also been used to retrieve detailed stock fundamental data and even for client side applications where it reduced the load on master RDBS enough to extend the server life by years.     
