@@ -8,6 +8,8 @@ When I was working on the API document I found that this version of the code is 
 
 If you want to try MDS then please let me know and I will make it a priority to either fix this version or locate the good version. 
 
+NOTE:  I would have made this repository private until fixed but GitHub doesn't have free private repositories.  Sorry for the inconvienience.
+
 ###Changing Market Conditions###
 Since I wrote this version a few things have changed.  Riak has emerged as a more sophisticated approach.  I think Riak may be overkill for forward propagated caching.  I have also found that during the period from 2015 through 2016 Elastic search has become so fast at returning detailed body data along with search results that in many instances using a separate metadata cache is no longer necessary.  There are exceptions which is where MDS may will continue to fill a valuable architectural niche especially when you need to support nearly infinite parallel read capacity limited only by network bandwidth. 
 
