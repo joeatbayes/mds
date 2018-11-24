@@ -1,8 +1,10 @@
 # mds  (Metadata Store)
 High performance KV Metadaa store ideal for Web Scale systems that are struggling to meet performance and data freshness demands at a reasonable cost.   [API DOC](doc/api-doc.md)
 
-# BROKEN PLEASE DO NOT ATTEMPT TO USE THIS YET.  
-### CONTACT ME IF YOU WANT TO TRY  MDS  AND I WILL MAKE IT A PRIORITY TO LOCATE A CORRECT VERSION
+## Replaced with a GO version [Meta Data Server](https://bitbucket.org/joexdobs/meta-data-server/src/master/)
+
+##### BROKEN PLEASE DO NOT ATTEMPT TO USE THIS YET.  
+##### CONTACT ME IF YOU WANT TO TRY  MDS  AND I WILL MAKE IT A PRIORITY TO LOCATE A CORRECT VERSION
 
 When I was working on the API document I found that this version of the code is broke.   I had a perfectly working version when testing previously.   I should have added it to github then but I waited a couple years and a couple of laptops.  Well live and learn.  
 
